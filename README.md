@@ -1,31 +1,19 @@
-# shadcn/ui monorepo template
+# About
+Battleship Online is a real-time multiplayer web game built with TypeScript, React, Vite, Node.js, and WebSocket. The project follows a monorepo architecture using Turborepo and PNPM workspaces, ensuring efficient development and scalability.
 
-This template is for creating a monorepo with shadcn/ui.
+Players can arrange their ships randomly or via drag-and-drop before starting a match. The game features matchmaking with random opponents or private rooms for friends. A real-time chat is available during gameplay.
 
-## Usage
+## Key Features:
+Leaderboard updated daily in real-time
 
-```bash
-pnpm dlx shadcn@latest init
-```
+Turn-based gameplay with a default 15-20 second timer (extendable upon request)
 
-## Adding components
+Multiple maps and game modes for variety
 
-To add components to your app, run the following command at the root of your `web` app:
+Minimal login system: Anonymous players can participate but won't gain ranking points
 
-```bash
-pnpm dlx shadcn@latest add button -c apps/web
-```
+WebSocket-powered real-time updates for game state and leaderboard
 
-This will place the ui components in the `packages/ui/src/components` directory.
+Anti-cheat considerations to counter AI-assisted gameplay
 
-## Tailwind
-
-Your `tailwind.config.ts` and `globals.css` are already set up to use the components from the `ui` package.
-
-## Using components
-
-To use the components in your app, import them from the `ui` package.
-
-```tsx
-import { Button } from "@workspace/ui/components/button"
-```
+The goal is to create the most engaging and competitive Battleship experience available online. 
