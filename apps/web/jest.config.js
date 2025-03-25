@@ -1,0 +1,1 @@
+export { default } from "@workspace/jest-config/jest.config.js";
