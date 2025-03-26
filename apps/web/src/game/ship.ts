@@ -7,6 +7,7 @@ interface IShip {
 export class Ship implements IShip {
     #length = 1;
     #hits = 0;
+    isPlaced = false;
     constructor(length: number = 1) {
         if (length <= 0) {
             throw new Error("Ship's length must be >= 1");

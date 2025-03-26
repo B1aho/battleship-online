@@ -12,27 +12,79 @@ export interface ICell {
     isHit: boolean;
 }
 
+type Direction = "horizontal" | "vertical";
+
 interface IGameboard {
-    getBoard: () => ICell[][] | null;
+    getBoard: () => ICell[][];
     receiveAttack: (coord: ICoord) => boolean;
+    placeShip: (coord: ICoord, shipId: number, direction: Direction) => boolean;
 }
 
-// Возможность рандомного размещения кораблей на поле согласно правилам
-// Размещение конкретной длины корабля в конкретном месте ,если возможно,
-// Задание макисмальной длины для кораблей и их максимального количества исходя из размера поля
-// Это все выше опсианное в конструкторе 
-// Проверка потоплены ли все корабли
-// Мониторим промохи
+const CLASSIC_SIZE = 10;
+const CLASSIC_MAX_SHIP = 4;
+
 export class Gameboard implements IGameboard {
-    #board: ICell[][] | null = null;
-    #ships: Ship[] | null = null;
-    constructor(gameMode: GameMode = "classic", size = 10) {
+    #board: ICell[][] = [];
+    // Набор кораблей доступный для расстановки от самых больших к самым маленьким
+    #ships: Ship[] = [];
+    constructor(gameMode: GameMode = "classic", size = CLASSIC_SIZE) {
         if (size < 0) throw new Error("Size can't be negative");
-        this.#initBoard(size);
+        this.#initBoard(size); // Убрать size вообще - определяется на основе gameMode
+        this.#initShips(gameMode);
     }
 
     getBoard() {
-        return this.#board;
+        return this.#board ?? [];
+    }
+
+    getShips() {
+        return this.#ships;
+    }
+
+    placeShip(beginCoord: ICoord, shipId: number, direction: Direction) {
+        const targetShip = this.#ships[shipId];
+        if (!targetShip) return false;
+        const length = targetShip.length() - 1;
+        // Calculate end cell's coordinates
+        const endCoord: ICoord = direction === "horizontal"
+            ? { x: beginCoord.x + length, y: beginCoord.y }
+            : { x: beginCoord.x, y: beginCoord.y + length }
+        // Check if cells exist
+        if (endCoord.x >= CLASSIC_SIZE || endCoord.y >= CLASSIC_SIZE)
+            return false;
+        // Check if all target cells is empty and if perimeter empty
+        if (!this.#isCellsEmpty(beginCoord, endCoord, direction))
+            return false;
+        // Place the ship
+        let idx = 0;
+        while (idx < length) {
+            const x = direction === "horizontal" ? beginCoord.x + idx : beginCoord.x;
+            const y = direction === "vertical" ? beginCoord.y + idx : beginCoord.y;
+
+            if (this.#board[x] && this.#board[x][y]) {
+                this.#board[x][y].shipId = shipId;
+            }
+            idx++;
+        }
+        targetShip.isPlaced = true;
+        return true;
+    };
+
+    #isCellsEmpty(begin: ICoord, end: ICoord, direction: Direction): boolean {
+        return true;
+    };
+
+    #initShips(mode: GameMode) {
+        if (mode === "classic") {
+            this.#ships = Array.from({ length: CLASSIC_SIZE });
+            for (let i = 1, idx = 0; i <= CLASSIC_MAX_SHIP; i++) {
+                let shipsNum = CLASSIC_MAX_SHIP + 1 - i;
+                while (shipsNum) {
+                    this.#ships[idx++] = new Ship(i);
+                    shipsNum--;
+                }
+            }
+        }
     }
 
     #initBoard(size: number) {
