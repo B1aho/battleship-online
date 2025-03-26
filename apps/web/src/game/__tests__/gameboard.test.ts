@@ -54,13 +54,31 @@ describe("Test Gameboard interface for classic mode", () => {
             expect(typeof board.placeShip).toBe("function");
         });
 
-        it("should be able to place ship on board", () => {
+        it("should be able to place ship on board #1", () => {
+            const grid = board.getBoard();
             board.placeShip({ x: 0, y: 0 }, 4, "horizontal");
             const cellView: ICell = { shipId: 4, isHit: false };
-            const grid = board.getBoard();
             expect(grid).not.toBeUndefined();
             expect(grid[0]?.[0]).toEqual(cellView);
             expect(grid[0]?.[1]).toEqual(cellView);
+            expect(grid[0]?.[2]).not.toEqual(cellView);
+        });
+
+        it("should be able to place ship on board #2", () => {
+            board.placeShip({ x: 3, y: 3 }, 7, "horizontal");
+            const cellView: ICell = { shipId: 7, isHit: false };
+            const grid = board.getBoard();
+            expect(grid).not.toBeUndefined();
+            expect(grid[3]?.[3]).toEqual(cellView);
+            expect(grid[3]?.[4]).toEqual(cellView);
+            expect(grid[3]?.[5]).toEqual(cellView);
+            expect(grid[3]?.[6]).not.toEqual(cellView);
+            expect(grid[4]?.[3]).not.toEqual(cellView);
+        });
+
+        it("shouldn't be able to place ship on board outer the bounds", () => {
+            expect(board.placeShip({ x: 8, y: 8 }, 9, "vertical"))
+                .toBe(false);
         });
     });
 

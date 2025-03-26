@@ -57,12 +57,12 @@ export class Gameboard implements IGameboard {
             return false;
         // Place the ship
         let idx = 0;
-        while (idx < length) {
+        while (idx <= length) {
             const x = direction === "horizontal" ? beginCoord.x + idx : beginCoord.x;
             const y = direction === "vertical" ? beginCoord.y + idx : beginCoord.y;
 
-            if (this.#board[x] && this.#board[x][y]) {
-                this.#board[x][y].shipId = shipId;
+            if (this.#board[y] && this.#board[y][x]) {
+                this.#board[y][x].shipId = shipId;
             }
             idx++;
         }
@@ -90,8 +90,7 @@ export class Gameboard implements IGameboard {
     #initBoard(size: number) {
         this.#board = Array.from({ length: size });
         this.#board.forEach((_, idx) => {
-            const row: ICell[] = Array.from({ length: size });
-            row.fill({ isHit: false, shipId: null })
+            const row: ICell[] = Array.from({ length: size }, () => ({ shipId: null, isHit: false }));
             if (this.#board) this.#board[idx] = row;
         })
     }
