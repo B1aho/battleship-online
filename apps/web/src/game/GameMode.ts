@@ -4,7 +4,18 @@ import { IGameMode, IPlace, ICell, ICoord, IGameboard, IShip } from "./types"
 const CLASSIC_SIZE = 10;
 const CLASSIC_MAX_SHIP = 4;
 
+/**
+ * The ClassicGameMode class represent battleship mode with classic rules. It responsible for:
+ * grid size, number of ships, kind of ships, coordinates validating and attack rules
+ */
 export class ClassicGameMode implements IGameMode {
+    /**
+     * Check if ship could be in specific place
+     * @param placeInfo - description of place includes: start and end coords, ship direction
+     * @param shipId - number represents ship
+     * @param grid - game's grid
+     * @returns true - if place is valid, false - otherwise
+     */
     isValidPlace(placeInfo: IPlace, shipId: number, grid: ICell[][]) {
         const { start, end } = placeInfo;
         // Check if cells exist
@@ -16,6 +27,14 @@ export class ClassicGameMode implements IGameMode {
         return true;
     };
 
+    /**
+     * Checks if the cells (target cells and the surrounding perimeter) are free to place a ship on them
+     * @param begin - coord of start target cell
+     * @param end - coord of start target cell
+     * @param shipId - number represents ship
+     * @param grid - game's grid
+     * @returns true - if all cells are free, false - otherwise
+     */
     #isCellsEmpty(begin: ICoord, end: ICoord, shipId: number, grid: ICell[][]): boolean {
         const rowStart = Math.max(0, begin.y - 1);
         const rowEnd = Math.min(CLASSIC_SIZE - 1, end.y + 1);
@@ -32,6 +51,12 @@ export class ClassicGameMode implements IGameMode {
         return true;
     };
 
+    /**
+     * Fill target cells with value
+     * @param place - description of place includes: start and end coords, ship direction
+     * @param value - value that will be placed into Сell.shipId 
+     * @param grid - Game's grid
+     */
     utilityPlace(place: IPlace, value: null | number, grid: ICell[][]) {
         const { start, end, direction } = place;
         let idx = 0;
@@ -45,6 +70,10 @@ export class ClassicGameMode implements IGameMode {
         }
     }
 
+    /**
+     * Init and return classic set of ships from smaller to bigger
+     * @returns array of ships in order by it lengths: 1, 1, 1, 1, 2, 2, 2, 3, 3, 4
+     */
     initShips() {
         const ships: IShip[] = Array.from({ length: CLASSIC_SIZE });
         for (let i = 1, idx = 0; i <= CLASSIC_MAX_SHIP; i++) {
@@ -57,6 +86,10 @@ export class ClassicGameMode implements IGameMode {
         return ships;
     }
 
+    /**
+     * Init and return game's grid
+     * @returns 10x10 grid
+     */
     initBoard() {
         const grid: ICell[][] = Array.from({ length: CLASSIC_SIZE });
         grid.forEach((_, idx) => {
@@ -66,10 +99,22 @@ export class ClassicGameMode implements IGameMode {
         return grid;
     }
 
+    /**
+     * Check if coordinates belong to grid
+     * @param x - columns
+     * @param y - row
+     * @returns true - if belong; false - otherwise
+     */
     isValidCoords(x: number, y: number): boolean {
         return (x >= 0 && x < CLASSIC_SIZE && y >= 0 && y < CLASSIC_SIZE);
     }
 
+    /**
+     * Detect ship's hit, miss, sunk 
+     * @param coord - coordinates of opponent's hit
+     * @param gameboard - instance of Gameboard
+     * @returns string that represent result of attack
+     */
     handleAttack(coord: ICoord, gameboard: IGameboard): string {
         const { x, y } = coord;
         const grid = gameboard.getGrid();
