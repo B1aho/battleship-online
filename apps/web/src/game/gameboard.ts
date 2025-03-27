@@ -21,7 +21,7 @@ export interface ICell {
 type Direction = "horizontal" | "vertical";
 
 interface IGameboard {
-    getBoard: () => ICell[][];
+    getGrid: () => ICell[][];
     receiveAttack: (coord: ICoord) => boolean;
     placeShip: (coord: ICoord, shipId: number, direction: Direction) => boolean;
 }
@@ -30,7 +30,7 @@ const CLASSIC_SIZE = 10;
 const CLASSIC_MAX_SHIP = 4;
 
 export class Gameboard implements IGameboard {
-    #board: ICell[][] = [];
+    #grid: ICell[][] = [];
     // Набор кораблей доступный для расстановки от самых больших к самым маленьким
     #ships: Ship[] = [];
     #shipsPlacement: Map<string, IPlace> = new Map();
@@ -40,8 +40,8 @@ export class Gameboard implements IGameboard {
         this.#initShips(gameMode);
     }
 
-    getBoard() {
-        return this.#board ?? [];
+    getGrid() {
+        return this.#grid ?? [];
     }
 
     getShips() {
@@ -91,7 +91,7 @@ export class Gameboard implements IGameboard {
 
         for (let y = rowStart; y <= rowEnd; y++) {
             for (let x = colStart; x <= colEnd; x++) {
-                if (this.#board[y]![x]!.shipId && this.#board[y]![x]!.shipId !== shipId) {
+                if (this.#grid[y]![x]!.shipId && this.#grid[y]![x]!.shipId !== shipId) {
                     return false;
                 }
             }
@@ -107,7 +107,7 @@ export class Gameboard implements IGameboard {
             const x = direction === "horizontal" ? start.x + idx : start.x;
             const y = direction === "vertical" ? start.y + idx : start.y;
 
-            this.#board[y]![x]!.shipId = value;
+            this.#grid[y]![x]!.shipId = value;
             idx++;
         }
     }
@@ -126,10 +126,10 @@ export class Gameboard implements IGameboard {
     }
 
     #initBoard(size: number) {
-        this.#board = Array.from({ length: size });
-        this.#board.forEach((_, idx) => {
+        this.#grid = Array.from({ length: size });
+        this.#grid.forEach((_, idx) => {
             const row: ICell[] = Array.from({ length: size }, () => ({ shipId: null, isHit: false }));
-            if (this.#board) this.#board[idx] = row;
+            if (this.#grid) this.#grid[idx] = row;
         })
     }
 

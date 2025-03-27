@@ -9,8 +9,8 @@ describe("Test Gameboard interface for classic mode", () => {
             board = new Gameboard("classic", 3);
         });
 
-        it("should contain getBoard method", () => {
-            expect(typeof board.getBoard).toBe("function");
+        it("should contain getGrid method", () => {
+            expect(typeof board.getGrid).toBe("function");
         });
 
         it("should initial board cells with the correct type", () => {
@@ -19,7 +19,7 @@ describe("Test Gameboard interface for classic mode", () => {
                 [{ shipId: null, isHit: false }, { shipId: null, isHit: false }, { shipId: null, isHit: false }],
                 [{ shipId: null, isHit: false }, { shipId: null, isHit: false }, { shipId: null, isHit: false }]
             ];
-            expect(board.getBoard()).toEqual(exampleBoard);
+            expect(board.getGrid()).toEqual(exampleBoard);
         });
     });
 
@@ -55,7 +55,7 @@ describe("Test Gameboard interface for classic mode", () => {
         });
 
         it("should be able to place ship on board #1", () => {
-            const grid = board.getBoard();
+            const grid = board.getGrid();
             const cellView: ICell = { shipId: 4, isHit: false };
             board.placeShip({ x: 0, y: 0 }, 4, "horizontal");
             expect(grid).not.toBeUndefined();
@@ -66,7 +66,7 @@ describe("Test Gameboard interface for classic mode", () => {
 
         it("should be able to place ship on board #2", () => {
             const cellView: ICell = { shipId: 7, isHit: false };
-            const grid = board.getBoard();
+            const grid = board.getGrid();
             board.placeShip({ x: 3, y: 3 }, 7, "horizontal");
             expect(grid).not.toBeUndefined();
             expect(grid[3]?.[3]).toEqual(cellView);
@@ -99,7 +99,7 @@ describe("Test Gameboard interface for classic mode", () => {
             board.placeShip({ x: 1, y: 0 }, 9, "vertical");
             const emptyCell: ICell = { shipId: null, isHit: false };
             const shipCell: ICell = { shipId: 9, isHit: false };
-            const grid = board.getBoard();
+            const grid = board.getGrid();
             expect(board.placeShip({ x: 0, y: 4 }, 5, "vertical"))
                 .toBe(false);
             expect(board.placeShip({ x: 1, y: 2 }, 9, "vertical"))
@@ -112,7 +112,7 @@ describe("Test Gameboard interface for classic mode", () => {
 
         it("should be able to place ships on edges", () => {
             const firstShipCell: ICell = { shipId: 8, isHit: false };
-            const grid = board.getBoard();
+            const grid = board.getGrid();
             board.placeShip({ x: 0, y: 0 }, 8, "horizontal");
             expect(grid).not.toBeUndefined();
             expect(grid[0]?.[0]).toEqual(firstShipCell);
