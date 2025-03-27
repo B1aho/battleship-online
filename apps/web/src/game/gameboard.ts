@@ -22,7 +22,8 @@ type Direction = "horizontal" | "vertical";
 
 interface IGameboard {
     getGrid: () => ICell[][];
-    receiveAttack: (coord: ICoord) => boolean;
+    getShips: () => Ship[];
+    receiveAttack: (coord: ICoord) => string;
     placeShip: (coord: ICoord, shipId: number, direction: Direction) => boolean;
 }
 
@@ -34,6 +35,7 @@ export class Gameboard implements IGameboard {
     // Набор кораблей доступный для расстановки от самых больших к самым маленьким
     #ships: Ship[] = [];
     #shipsPlacement: Map<string, IPlace> = new Map();
+    #sunked = 0;
     constructor(gameMode: GameMode = "classic", size = CLASSIC_SIZE) {
         if (size < 0) throw new Error("Size can't be negative");
         this.#initBoard(size); // Убрать size вообще - определяется на основе gameMode
@@ -133,7 +135,38 @@ export class Gameboard implements IGameboard {
         })
     }
 
+    #checkAllSunk(): boolean {
+        return this.#sunked === this.#ships.length;
+    }
+
+    #isValidCoords(x: number, y: number): boolean {
+        return (x >= 0 && x < CLASSIC_SIZE && y >= 0 && y < CLASSIC_SIZE);
+    }
+
     receiveAttack(coord: ICoord) {
-        return true;
+        if (!this.#isValidCoords(coord.x, coord.y))
+            throw new Error("Coordinates are not valid");
+        if (this.#checkAllSunk())
+            return "Game is over. No further moves allowed."
+        const { x, y } = coord;
+        const cell = this.#grid[y]![x];
+        if (!cell)
+            throw new Error("Cell is undefined");;
+        if (cell.isHit) return "Move has already been made";
+        cell.isHit = true;
+        const shipId = cell.shipId;
+        if (!shipId) return "Miss";
+        const hittedShip = this.#ships[shipId];
+        if (!hittedShip)
+            throw new Error("Ship is undefined");
+        hittedShip.hit();
+        // Check if sunk
+        if (hittedShip.isSunk()) {
+            this.#sunked++;
+            if (this.#checkAllSunk())
+                return "Hit. Game over."
+            else return "Hit. Sunk.";
+        }
+        return "Hit";
     };
 }

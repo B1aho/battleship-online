@@ -23,7 +23,7 @@ describe("Test Gameboard interface for classic mode", () => {
         });
     });
 
-    describe("Test ship initalization method", () => {
+    describe("Test ship initalization method on gameboard", () => {
         let board: Gameboard;
         beforeEach(() => {
             board = new Gameboard("classic");
@@ -44,7 +44,7 @@ describe("Test Gameboard interface for classic mode", () => {
         });
     })
 
-    describe("Test ship placement", () => {
+    describe("Test gameboard's ship placement", () => {
         let board: Gameboard;
         beforeEach(() => {
             board = new Gameboard("classic");
@@ -128,9 +128,43 @@ describe("Test Gameboard interface for classic mode", () => {
 
     });
 
+    describe("Test gameBoard's attack method", () => {
+        let board: Gameboard;
+        beforeEach(() => {
+            board = new Gameboard("classic");
+        });
 
-    it("should contain receiveAttack method", () => {
-        const board = new Gameboard();
-        expect(typeof board.receiveAttack).toBe("function");
-    });
+        it("should contain receiveAttack method", () => {
+            const board = new Gameboard();
+            expect(typeof board.receiveAttack).toBe("function");
+        });
+
+        it("should achive ship's hit", () => {
+            board.placeShip({ x: 0, y: 0 }, 8, "vertical");
+            board.receiveAttack({ x: 0, y: 0 });
+            board.receiveAttack({ x: 0, y: 1 });
+            expect(board.getShips()[8]?.isSunk()).toEqual(false);
+            board.receiveAttack({ x: 0, y: 2 });
+            expect(board.getShips()[8]?.isSunk()).toEqual(true);
+        });
+
+        it("should detect miss, hit, sunk", () => {
+            board.placeShip({ x: 4, y: 6 }, 8, "horizontal");
+            expect(board.receiveAttack({ x: 4, y: 6 }))
+                .toBe("Hit");
+            expect(board.receiveAttack({ x: 5, y: 6 }))
+                .toBe("Hit");
+            expect(board.receiveAttack({ x: 3, y: 8 }))
+                .toBe("Miss");
+            expect(board.receiveAttack({ x: 4, y: 6 }))
+                .toBe("Move has already been made");
+            expect(board.receiveAttack({ x: 6, y: 6 }))
+                .toBe("Hit. Sunk.");
+        });
+
+        it("should handle outer bounds coordinates", () => {
+            expect(() => board.receiveAttack({ x: -2, y: 0 }))
+                .toThrow("Coordinates are not valid");
+        })
+    })
 });
