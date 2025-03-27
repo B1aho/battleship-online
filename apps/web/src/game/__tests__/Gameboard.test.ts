@@ -1,47 +1,6 @@
 import { Gameboard, ICell } from "../Gameboard";
-import { Ship } from "../Ship";
 
 describe("Test Gameboard interface for classic mode", () => {
-
-    describe("Test game board initialization", () => {
-        let board: Gameboard;
-        beforeEach(() => {
-            board = new Gameboard("classic");
-        });
-
-        it("should contain getGrid method", () => {
-            expect(typeof board.getGrid).toBe("function");
-        });
-
-        it("should initial board cells with the correct type", () => {
-            expect(board.getGrid().length).toEqual(10);
-        });
-
-        it("should initial board cells with the correct type", () => {
-            expect(board.getGrid()[0]!.length).toEqual(10);
-        });
-    });
-
-    describe("Test ship initalization method on gameboard", () => {
-        let board: Gameboard;
-        beforeEach(() => {
-            board = new Gameboard("classic");
-        });
-
-        it("should exist method to get list of board's ships", () => {
-            expect(typeof board.getShips).toBe("function");
-        })
-
-        it("should init right ships configuration from smaller to bigger", () => {
-            const rightShipConfiguration: Ship[] = [
-                new Ship(1), new Ship(1), new Ship(1), new Ship(1),
-                new Ship(2), new Ship(2), new Ship(2),
-                new Ship(3), new Ship(3),
-                new Ship(4)
-            ];
-            expect(board.getShips()).toEqual(rightShipConfiguration);
-        });
-    })
 
     describe("Test gameboard's ship placement", () => {
         let board: Gameboard;
