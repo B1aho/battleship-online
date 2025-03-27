@@ -1,37 +1,19 @@
-import { ClassicGameMode, IGameMode } from "./GameMode";
-import { Ship } from "./Ship";
-
-type GameMode = "classic" | "other";
-
-export interface ICoord {
-    x: number;
-    y: number;
-}
-
-export interface IPlace {
-    start: ICoord;
-    end: ICoord;
-    direction: Direction;
-}
-
-export interface ICell {
-    shipId: number | null;
-    isHit: boolean;
-}
-
-export type Direction = "horizontal" | "vertical";
-
-interface IGameboard {
-    getGrid: () => ICell[][];
-    getShips: () => Ship[];
-    receiveAttack: (coord: ICoord) => string;
-    placeShip: (coord: ICoord, shipId: number, direction: Direction) => boolean;
-}
+import { ClassicGameMode } from "./GameMode";
+import {
+    IGameboard,
+    ICell,
+    Direction,
+    GameMode,
+    ICoord,
+    IPlace,
+    IShip,
+    IGameMode
+} from "./types";
 
 export class Gameboard implements IGameboard {
     #grid: ICell[][] = [];
     // Набор кораблей доступный для расстановки от самых больших к самым маленьким
-    #ships: Ship[] = [];
+    #ships: IShip[] = [];
     #shipsPlacement: Map<string, IPlace> = new Map();
     #sunked = 0;
     #gameMode: IGameMode | null = null;

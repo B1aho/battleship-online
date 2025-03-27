@@ -1,14 +1,5 @@
-import { Gameboard, ICell, ICoord, IPlace } from "./Gameboard";
 import { Ship } from "./Ship";
-
-export interface IGameMode {
-    isValidPlace: (placeInfo: IPlace, shipId: number, grid: ICell[][]) => boolean;
-    utilityPlace: (place: IPlace, value: null | number, grid: ICell[][]) => void;
-    initShips: () => Ship[];
-    initBoard: () => ICell[][];
-    isValidCoords: (x: number, y: number) => boolean;
-    handleAttack: (coord: ICoord, gameboard: Gameboard) => string;
-}
+import { IGameMode, IPlace, ICell, ICoord, IGameboard, IShip } from "./types"
 
 const CLASSIC_SIZE = 10;
 const CLASSIC_MAX_SHIP = 4;
@@ -55,7 +46,7 @@ export class ClassicGameMode implements IGameMode {
     }
 
     initShips() {
-        const ships: Ship[] = Array.from({ length: CLASSIC_SIZE });
+        const ships: IShip[] = Array.from({ length: CLASSIC_SIZE });
         for (let i = 1, idx = 0; i <= CLASSIC_MAX_SHIP; i++) {
             let shipsNum = CLASSIC_MAX_SHIP + 1 - i;
             while (shipsNum) {
@@ -79,7 +70,7 @@ export class ClassicGameMode implements IGameMode {
         return (x >= 0 && x < CLASSIC_SIZE && y >= 0 && y < CLASSIC_SIZE);
     }
 
-    handleAttack(coord: ICoord, gameboard: Gameboard): string {
+    handleAttack(coord: ICoord, gameboard: IGameboard): string {
         const { x, y } = coord;
         const grid = gameboard.getGrid();
         const ships = gameboard.getShips();

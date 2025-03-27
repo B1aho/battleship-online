@@ -1,9 +1,10 @@
-import { Gameboard, ICell } from "../Gameboard";
+import { Gameboard } from "../Gameboard";
+import { IGameboard, ICell } from "../types";
 
 describe("Test Gameboard interface for classic mode", () => {
 
     describe("Test gameboard's ship placement", () => {
-        let board: Gameboard;
+        let board: IGameboard;
         beforeEach(() => {
             board = new Gameboard("classic");
         });
@@ -87,7 +88,7 @@ describe("Test Gameboard interface for classic mode", () => {
     });
 
     describe("Test gameBoard's attack method", () => {
-        let board: Gameboard;
+        let board: IGameboard;
         beforeEach(() => {
             board = new Gameboard("classic");
         });

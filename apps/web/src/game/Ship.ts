@@ -1,8 +1,4 @@
-interface IShip {
-    length: () => number;
-    hit: () => void;
-    isSunk: () => boolean;
-}
+import { IShip } from "./types";
 
 export class Ship implements IShip {
     #length = 1;
