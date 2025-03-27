@@ -7,6 +7,12 @@ interface ICoord {
     y: number;
 }
 
+interface IPlace {
+    start: ICoord;
+    end: ICoord;
+    direction: Direction;
+}
+
 export interface ICell {
     shipId: number | null;
     isHit: boolean;
@@ -27,6 +33,7 @@ export class Gameboard implements IGameboard {
     #board: ICell[][] = [];
     // Набор кораблей доступный для расстановки от самых больших к самым маленьким
     #ships: Ship[] = [];
+    #shipsPlacement: Map<string, IPlace> = new Map();
     constructor(gameMode: GameMode = "classic", size = CLASSIC_SIZE) {
         if (size < 0) throw new Error("Size can't be negative");
         this.#initBoard(size); // Убрать size вообще - определяется на основе gameMode
@@ -44,6 +51,7 @@ export class Gameboard implements IGameboard {
     placeShip(beginCoord: ICoord, shipId: number, direction: Direction) {
         const targetShip = this.#ships[shipId];
         if (!targetShip) return false;
+        const lastPlacement = this.#shipsPlacement.get(shipId.toString());
         const length = targetShip.length() - 1;
         // Calculate end cell's coordinates
         const endCoord: ICoord = direction === "horizontal"
@@ -53,26 +61,56 @@ export class Gameboard implements IGameboard {
         if (endCoord.x >= CLASSIC_SIZE || endCoord.y >= CLASSIC_SIZE)
             return false;
         // Check if all target cells is empty and if perimeter empty
-        if (!this.#isCellsEmpty(beginCoord, endCoord, direction))
+        if (!this.#isCellsEmpty(beginCoord, endCoord, shipId))
             return false;
+        // Clear last placement if had
+        if (lastPlacement) {
+            this.#utilityPlace(lastPlacement, null);
+        }
         // Place the ship
-        let idx = 0;
-        while (idx <= length) {
-            const x = direction === "horizontal" ? beginCoord.x + idx : beginCoord.x;
-            const y = direction === "vertical" ? beginCoord.y + idx : beginCoord.y;
+        this.#utilityPlace({
+            start: beginCoord,
+            end: endCoord,
+            direction: direction,
+        }, shipId)
 
-            if (this.#board[y] && this.#board[y][x]) {
-                this.#board[y][x].shipId = shipId;
+        // Save current ship's place
+        this.#shipsPlacement.set(shipId.toString(), {
+            start: beginCoord,
+            end: endCoord,
+            direction: direction
+        });
+        return true;
+    };
+
+    #isCellsEmpty(begin: ICoord, end: ICoord, shipId: number): boolean {
+        const rowStart = Math.max(0, begin.y - 1);
+        const rowEnd = Math.min(CLASSIC_SIZE - 1, end.y + 1);
+        const colStart = Math.max(0, begin.x - 1);
+        const colEnd = Math.min(CLASSIC_SIZE - 1, end.x + 1);
+
+        for (let y = rowStart; y <= rowEnd; y++) {
+            for (let x = colStart; x <= colEnd; x++) {
+                if (this.#board[y]![x]!.shipId && this.#board[y]![x]!.shipId !== shipId) {
+                    return false;
+                }
             }
+        }
+        return true;
+    };
+
+    #utilityPlace(place: IPlace, value: null | number) {
+        const { start, end, direction } = place;
+        let idx = 0;
+        const length = direction === "horizontal" ? (end.x - start.x + 1) : (end.y - start.y + 1);
+        while (idx < length) {
+            const x = direction === "horizontal" ? start.x + idx : start.x;
+            const y = direction === "vertical" ? start.y + idx : start.y;
+
+            this.#board[y]![x]!.shipId = value;
             idx++;
         }
-        targetShip.isPlaced = true;
-        return true;
-    };
-
-    #isCellsEmpty(begin: ICoord, end: ICoord, direction: Direction): boolean {
-        return true;
-    };
+    }
 
     #initShips(mode: GameMode) {
         if (mode === "classic") {

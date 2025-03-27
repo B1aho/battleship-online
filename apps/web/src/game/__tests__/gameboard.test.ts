@@ -56,8 +56,8 @@ describe("Test Gameboard interface for classic mode", () => {
 
         it("should be able to place ship on board #1", () => {
             const grid = board.getBoard();
-            board.placeShip({ x: 0, y: 0 }, 4, "horizontal");
             const cellView: ICell = { shipId: 4, isHit: false };
+            board.placeShip({ x: 0, y: 0 }, 4, "horizontal");
             expect(grid).not.toBeUndefined();
             expect(grid[0]?.[0]).toEqual(cellView);
             expect(grid[0]?.[1]).toEqual(cellView);
@@ -65,9 +65,9 @@ describe("Test Gameboard interface for classic mode", () => {
         });
 
         it("should be able to place ship on board #2", () => {
-            board.placeShip({ x: 3, y: 3 }, 7, "horizontal");
             const cellView: ICell = { shipId: 7, isHit: false };
             const grid = board.getBoard();
+            board.placeShip({ x: 3, y: 3 }, 7, "horizontal");
             expect(grid).not.toBeUndefined();
             expect(grid[3]?.[3]).toEqual(cellView);
             expect(grid[3]?.[4]).toEqual(cellView);
@@ -80,7 +80,54 @@ describe("Test Gameboard interface for classic mode", () => {
             expect(board.placeShip({ x: 8, y: 8 }, 9, "vertical"))
                 .toBe(false);
         });
+
+        it("shouldn't place two ships too close", () => {
+            board.placeShip({ x: 0, y: 0 }, 4, "horizontal");
+            expect(board.placeShip({ x: 2, y: 0 }, 5, "horizontal"))
+                .toBe(false);
+        });
+
+        it("shouldn't place two ships too close", () => {
+            board.placeShip({ x: 1, y: 0 }, 9, "vertical");
+            expect(board.placeShip({ x: 0, y: 4 }, 5, "vertical"))
+                .toBe(false);
+            expect(board.placeShip({ x: 0, y: 5 }, 5, "vertical"))
+                .toBe(true);
+        });
+
+        it("should be able to replace ship", () => {
+            board.placeShip({ x: 1, y: 0 }, 9, "vertical");
+            const emptyCell: ICell = { shipId: null, isHit: false };
+            const shipCell: ICell = { shipId: 9, isHit: false };
+            const grid = board.getBoard();
+            expect(board.placeShip({ x: 0, y: 4 }, 5, "vertical"))
+                .toBe(false);
+            expect(board.placeShip({ x: 1, y: 2 }, 9, "vertical"))
+                .toBe(true);
+            expect(grid[0]?.[1]).toEqual(emptyCell);
+            expect(grid[1]?.[1]).toEqual(emptyCell);
+            expect(grid[2]?.[1]).toEqual(shipCell);
+            expect(grid[5]?.[1]).toEqual(shipCell);
+        });
+
+        it("should be able to place ships on edges", () => {
+            const firstShipCell: ICell = { shipId: 8, isHit: false };
+            const grid = board.getBoard();
+            board.placeShip({ x: 0, y: 0 }, 8, "horizontal");
+            expect(grid).not.toBeUndefined();
+            expect(grid[0]?.[0]).toEqual(firstShipCell);
+            expect(grid[0]?.[2]).toEqual(firstShipCell);
+            expect(grid[0]?.[3]).not.toEqual(firstShipCell);
+
+            const secondShipCell: ICell = { shipId: 9, isHit: false };
+            board.placeShip({ x: 9, y: 1 }, 9, "vertical");
+            expect(grid[1]?.[9]).toEqual(secondShipCell);
+            expect(grid[4]?.[9]).toEqual(secondShipCell);
+            expect(grid[5]?.[9]).not.toEqual(secondShipCell);
+        });
+
     });
+
 
     it("should contain receiveAttack method", () => {
         const board = new Gameboard();
