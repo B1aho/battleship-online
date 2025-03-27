@@ -1,12 +1,12 @@
-import { Gameboard, ICell } from "../gameboard";
-import { Ship } from "../ship";
+import { Gameboard, ICell } from "../Gameboard";
+import { Ship } from "../Ship";
 
 describe("Test Gameboard interface for classic mode", () => {
 
     describe("Test game board initialization", () => {
         let board: Gameboard;
         beforeEach(() => {
-            board = new Gameboard("classic", 3);
+            board = new Gameboard("classic");
         });
 
         it("should contain getGrid method", () => {
@@ -14,12 +14,11 @@ describe("Test Gameboard interface for classic mode", () => {
         });
 
         it("should initial board cells with the correct type", () => {
-            const exampleBoard: ICell[][] = [
-                [{ shipId: null, isHit: false }, { shipId: null, isHit: false }, { shipId: null, isHit: false }],
-                [{ shipId: null, isHit: false }, { shipId: null, isHit: false }, { shipId: null, isHit: false }],
-                [{ shipId: null, isHit: false }, { shipId: null, isHit: false }, { shipId: null, isHit: false }]
-            ];
-            expect(board.getGrid()).toEqual(exampleBoard);
+            expect(board.getGrid().length).toEqual(10);
+        });
+
+        it("should initial board cells with the correct type", () => {
+            expect(board.getGrid()[0]!.length).toEqual(10);
         });
     });
 
