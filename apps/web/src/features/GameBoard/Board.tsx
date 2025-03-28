@@ -1,7 +1,6 @@
 import { IGameboard, ModeType } from "@/src/game/types";
-import { ReactElement, useMemo, useState } from "react";
+import { ReactElement, useCallback, useMemo, useState } from "react";
 import { createCells } from "./utility";
-import { Button } from "@workspace/ui/components/button";
 import { BoardView } from "./BoardView";
 
 interface IBroadProps {
@@ -12,22 +11,19 @@ export const Board = ({ gameboard }: IBroadProps) => {
     const [grid, setGrid] = useState(gameboard.getGrid());
     // const [ships, setShips] = useState(gameboard.getShips());
     const { SIZE, GRID } = ModeType[gameboard.getMode()];
+
+    const attackFn = useCallback((x: number, y: number) => {
+        gameboard.receiveAttack({ x, y });
+        setGrid(gameboard.getGrid().map(row => [...row]));
+    }, [gameboard]);
+
     const cells: ReactElement[] = useMemo(() => {
-        return createCells(grid, SIZE);
-    }, [grid, SIZE]);
+        return createCells(grid, attackFn);
+    }, [grid, attackFn]);
 
     return (
         <>
             <BoardView cells={cells} gridType={GRID} gridSize={SIZE} />
-            <Button onClick={() => {
-                const res = gameboard.receiveAttack({ x: 0, y: 0 });
-                if (res === "Hit") {
-                    console.log("EQUAL");
-                    setGrid(gameboard.getGrid().map(row => [...row]));
-                }
-            }}>
-                Click
-            </Button>
         </>
     );
 }

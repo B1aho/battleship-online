@@ -1,8 +1,12 @@
 import { ICell } from "@/src/game/types";
 import { ReactElement } from "react";
 
-export function createCells(grid: ICell[][], size: number): ReactElement[] {
-    const cells = []
+export function createCells(
+    grid: ICell[][],
+    attackFn: (x: number, y: number) => void,
+): ReactElement[] {
+    const cells = [];
+    const size = grid.length;
     for (let i = 0; i < size; i++) {
         for (let j = 0; j < size; j++) {
             const { shipId, isHit } = grid[i]![j]!;
@@ -20,7 +24,14 @@ export function createCells(grid: ICell[][], size: number): ReactElement[] {
                 default:
                     break;
             }
-            cells.push(<div key={`${i}-${j}`} className="w-full text-center outline-1">{symbol}</div>);
+            cells.push(
+                <div key={`${i}-${j}`} className="w-full text-center outline-1" onClick={() => {
+                    console.log("hit")
+                    attackFn(j, i)
+                }}>
+                    {symbol}
+                </div>
+            );
         }
     }
     return cells;

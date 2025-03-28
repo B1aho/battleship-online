@@ -8,11 +8,11 @@ interface IBroadViewProps {
 
 export const BoardView = ({ cells, gridType, gridSize }: IBroadViewProps) => {
     return (
-        <div className="grid grid-board">
+        <div className="grid grid-board select-none">
             <div className="grid one-row col-start-2">
                 {Array.from({ length: gridSize }).map((_, idx) => {
                     return (
-                        <div className="w-full text-center">
+                        <div key={`A-${idx}`} className="w-full text-center">
                             {idx}
                         </div>)
                 })}
@@ -20,7 +20,7 @@ export const BoardView = ({ cells, gridType, gridSize }: IBroadViewProps) => {
             <div className="grid one-column row-start-2">
                 {Array.from({ length: gridSize }).map((_, idx) => {
                     return (
-                        <div className="w-full text-center">
+                        <div key={`N-${idx}`} className="w-full text-center">
                             {String.fromCharCode('A'.charCodeAt(0) + idx)}
                         </div>)
                 })}
