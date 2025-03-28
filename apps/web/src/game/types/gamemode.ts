@@ -8,3 +8,12 @@ export interface IGameMode {
     isValidCoords: (x: number, y: number) => boolean;
     handleAttack: (coord: ICoord, gameboard: IGameboard) => string;
 }
+
+/**
+ * Calssic mode's config
+ */
+export enum ClassicMode {
+    GRID = "classic-grid",
+    SIZE = 10,
+    MAX_SHIP = 4,
+};

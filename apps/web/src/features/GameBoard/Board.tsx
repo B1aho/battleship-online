@@ -1,4 +1,4 @@
-import { IGameboard } from "@/src/game/types";
+import { ClassicMode, IGameboard } from "@/src/game/types";
 import { ReactElement, useMemo, useState } from "react";
 import { createCells } from "./utility";
 import { Button } from "@workspace/ui/components/button";
@@ -8,16 +8,10 @@ interface IBroadProps {
     gameboard: IGameboard;
 }
 
-// В types перенси и  использую везде его
-enum GridSize {
-    CLASSIC_GRID = "classic-grid",
-    CLASSIC_SIZE = 10
-}
-
 export const Board = ({ gameboard }: IBroadProps) => {
     const [grid, setGrid] = useState(gameboard.getGrid());
     const [ships, setShips] = useState(gameboard.getShips());
-    const cells: ReactElement[] = useMemo(() => createCells(grid, GridSize.CLASSIC_SIZE), [grid]);
+    const cells: ReactElement[] = useMemo(() => createCells(grid, ClassicMode.SIZE), [grid]);
 
     return (
         <>

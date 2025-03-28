@@ -30,18 +30,29 @@ export class Gameboard implements IGameboard {
     #shipsPlacement: Map<string, IPlace> = new Map();
     #sunked = 0;
     #gameMode: IGameMode | null = null;
+    #mode: GameMode = "classic";
 
     /**
      * Create game board due to chosen game mode
      * @param gameMode - represent mode of current game
      */
     constructor(gameMode: GameMode = "classic") {
-        if (gameMode === "classic")
+        if (gameMode === "classic") {
+            this.#mode = "classic";
             this.#gameMode = new ClassicGameMode();
+        }
         if (this.#gameMode) {
             this.#grid = this.#gameMode.initBoard();
             this.#ships = this.#gameMode.initShips();
         }
+    }
+
+    /**
+     * Return current game mode's name
+     * @returns string that represent mode's name
+     */
+    getMode() {
+        return this.#mode;
     }
 
     /**
