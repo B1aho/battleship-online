@@ -1,12 +1,15 @@
 import './App.css'
-import { BoardView } from './features/GameBoard/BoardView'
-import { Gameboard } from './game/Gameboard'
+import { Board } from './features/GameBoard/Board';
+import { Gameboard } from './game/Gameboard';
 
 function App() {
   const game = new Gameboard();
+  game.placeShip({ x: 0, y: 0 }, 9, "horizontal");
+  game.placeShip({ x: 0, y: 1 }, 8, "horizontal");
+  game.placeShip({ x: 3, y: 4 }, 8, "vertical");
   return (
     <>
-      <BoardView grid={game.getGrid()} />
+      <Board gameboard={game} />
     </>
   )
 }
