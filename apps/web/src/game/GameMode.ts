@@ -1,11 +1,12 @@
 import { Ship } from "./Ship";
-import { IGameMode, IPlace, ICell, ICoord, IGameboard, IShip, ClassicMode } from "./types";
+import { IGameMode, IPlace, ICell, ICoord, IGameboard, IShip, ModeType, Mode } from "./types";
 
 /**
  * The ClassicGameMode class represent battleship mode with classic rules. It responsible for:
  * grid size, number of ships, kind of ships, coordinates validating and attack rules
  */
 export class ClassicGameMode implements IGameMode {
+    mode: Mode = ModeType["classic"];
     /**
      * Check if ship could be in specific place
      * @param placeInfo - description of place includes: start and end coords, ship direction
@@ -16,7 +17,7 @@ export class ClassicGameMode implements IGameMode {
     isValidPlace(placeInfo: IPlace, shipId: number, grid: ICell[][]) {
         const { start, end } = placeInfo;
         // Check if cells exist
-        if (end.x >= ClassicMode.SIZE || end.y >= ClassicMode.SIZE)
+        if (end.x >= this.mode.SIZE || end.y >= this.mode.SIZE)
             return false;
         // Check if all target cells is empty and if perimeter empty
         if (!this.#isCellsEmpty(start, end, shipId, grid))
@@ -34,9 +35,9 @@ export class ClassicGameMode implements IGameMode {
      */
     #isCellsEmpty(begin: ICoord, end: ICoord, shipId: number, grid: ICell[][]): boolean {
         const rowStart = Math.max(0, begin.y - 1);
-        const rowEnd = Math.min(ClassicMode.SIZE - 1, end.y + 1);
+        const rowEnd = Math.min(this.mode.SIZE - 1, end.y + 1);
         const colStart = Math.max(0, begin.x - 1);
-        const colEnd = Math.min(ClassicMode.SIZE - 1, end.x + 1);
+        const colEnd = Math.min(this.mode.SIZE - 1, end.x + 1);
 
         for (let y = rowStart; y <= rowEnd; y++) {
             for (let x = colStart; x <= colEnd; x++) {
@@ -72,9 +73,9 @@ export class ClassicGameMode implements IGameMode {
      * @returns array of ships in order by it lengths: 1, 1, 1, 1, 2, 2, 2, 3, 3, 4
      */
     initShips() {
-        const ships: IShip[] = Array.from({ length: +ClassicMode.SIZE });
-        for (let i = 1, idx = 0; i <= ClassicMode.MAX_SHIP; i++) {
-            let shipsNum = ClassicMode.MAX_SHIP + 1 - i;
+        const ships: IShip[] = Array.from({ length: this.mode.SIZE });
+        for (let i = 1, idx = 0; i <= this.mode.MAX_SHIP_KIND; i++) {
+            let shipsNum = this.mode.MAX_SHIP_KIND + 1 - i;
             while (shipsNum) {
                 ships[idx++] = new Ship(i);
                 shipsNum--;
@@ -88,9 +89,9 @@ export class ClassicGameMode implements IGameMode {
      * @returns 10x10 grid
      */
     initBoard() {
-        const grid: ICell[][] = Array.from({ length: +ClassicMode.SIZE });
+        const grid: ICell[][] = Array.from({ length: this.mode.SIZE });
         grid.forEach((_, idx) => {
-            const row: ICell[] = Array.from({ length: +ClassicMode.SIZE }, () => ({ shipId: null, isHit: false }));
+            const row: ICell[] = Array.from({ length: this.mode.SIZE }, () => ({ shipId: null, isHit: false }));
             if (grid) grid[idx] = row;
         })
         return grid;
@@ -103,7 +104,7 @@ export class ClassicGameMode implements IGameMode {
      * @returns true - if belong; false - otherwise
      */
     isValidCoords(x: number, y: number): boolean {
-        return (x >= 0 && x < ClassicMode.SIZE && y >= 0 && y < ClassicMode.SIZE);
+        return (x >= 0 && x < this.mode.SIZE && y >= 0 && y < this.mode.SIZE);
     }
 
     /**
