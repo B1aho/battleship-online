@@ -1,19 +1,19 @@
 .classic-grid {
-  grid-template-columns: repeat(10, 40px);
-  grid-template-rows: repeat(10, 40px);
+  grid-template-columns: repeat(10, var(--cell-size));
+  grid-template-rows: repeat(10, var(--cell-size));
 }
 
 .one-column {
-  grid-template-columns: 40px;
-  grid-template-rows: repeat(10, 40px);
+  grid-template-columns: var(--cell-size);
+  grid-template-rows: repeat(10, var(--cell-size));
 }
 
 .one-row {
-  grid-template-rows: 40px;
-  grid-template-columns: repeat(10, 40px);
+  grid-template-rows: var(--cell-size);
+  grid-template-columns: repeat(10, var(--cell-size));
 }
 
 .grid-board {
-  grid-template-columns: 40px 1fr;
-  grid-template-rows: 40px 1fr;
+  grid-template-columns: var(--cell-size) 1fr;
+  grid-template-rows: var(--cell-size) 1fr;
 }

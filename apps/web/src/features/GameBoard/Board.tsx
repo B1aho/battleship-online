@@ -10,8 +10,8 @@ interface IBroadProps {
 
 export const Board = ({ gameboard }: IBroadProps) => {
     const [grid, setGrid] = useState(gameboard.getGrid());
-    const [ships, setShips] = useState(gameboard.getShips());
-    const { SIZE, GRID, MAX_SHIP_KIND } = ModeType[gameboard.getMode()];
+    // const [ships, setShips] = useState(gameboard.getShips());
+    const { SIZE, GRID } = ModeType[gameboard.getMode()];
     const cells: ReactElement[] = useMemo(() => {
         return createCells(grid, SIZE);
     }, [grid, SIZE]);

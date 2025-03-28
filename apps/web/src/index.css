@@ -1,1 +1,11 @@
 @import "../../../packages/ui/src/styles/globals.css";
+
+:root {
+    --cell-size: 40px;
+  }
+  
+  @media (max-width: 480px) {
+    :root {
+      --cell-size: 28px;
+    }
+  }
