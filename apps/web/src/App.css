@@ -2,3 +2,18 @@
   grid-template-columns: repeat(10, 40px);
   grid-template-rows: repeat(10, 40px);
 }
+
+.one-column {
+  grid-template-columns: 40px;
+  grid-template-rows: repeat(10, 40px);
+}
+
+.one-row {
+  grid-template-rows: 40px;
+  grid-template-columns: repeat(10, 40px);
+}
+
+.grid-board {
+  grid-template-columns: 40px 1fr;
+  grid-template-rows: 40px 1fr;
+}

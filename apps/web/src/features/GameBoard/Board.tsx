@@ -11,15 +11,14 @@ interface IBroadProps {
 export const Board = ({ gameboard }: IBroadProps) => {
     const [grid, setGrid] = useState(gameboard.getGrid());
     const [ships, setShips] = useState(gameboard.getShips());
+    const { SIZE, GRID, MAX_SHIP_KIND } = ModeType[gameboard.getMode()];
     const cells: ReactElement[] = useMemo(() => {
-        return createCells(grid, ModeType[gameboard.getMode()].SIZE);
-    }, [grid, gameboard]);
+        return createCells(grid, SIZE);
+    }, [grid, SIZE]);
 
     return (
         <>
-            <BoardView cells={cells} gridType={
-                ModeType[gameboard.getMode()].GRID
-            } />
+            <BoardView cells={cells} gridType={GRID} gridSize={SIZE} />
             <Button onClick={() => {
                 const res = gameboard.receiveAttack({ x: 0, y: 0 });
                 if (res === "Hit") {
