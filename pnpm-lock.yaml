@@ -45,6 +45,9 @@ importers:
       '@eslint/js':
         specifier: ^9.21.0
         version: 9.23.0
+      '@tailwindcss/postcss':
+        specifier: ^4.0.8
+        version: 4.0.15
       '@types/node':
         specifier: ^20
         version: 20.17.27
@@ -78,6 +81,9 @@ importers:
       globals:
         specifier: ^15.15.0
         version: 15.15.0
+      tailwindcss:
+        specifier: ^4.0.8
+        version: 4.0.15
       typescript:
         specifier: ~5.7.2
         version: 5.7.3
