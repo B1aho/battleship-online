@@ -42,8 +42,8 @@ export function createShips(ships: IShip[]) {
     while (i >= 0) {
         const ship = ships[i];
         if (!ship) continue;
-        const blocks = Array.from({ length: ship.length() }, () => {
-            return <div className={"aspect-square w-2 " + (ship.isSunk() ? "bg-red-600" : "bg-neutral-500")}></div>
+        const blocks = Array.from({ length: ship.length() }, (_, k) => {
+            return <div key={`S-${k}`} className={"aspect-square w-2 " + (ship.isSunk() ? "bg-red-600" : "bg-neutral-500")}></div>
         })
         shipBlocks.push(blocks);
         i--;
