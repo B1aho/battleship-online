@@ -3,6 +3,7 @@ import { GameMode, ICell, ICoord, IGameboard, IPlace, IShip } from "../types";
 export interface IGameMode {
     mode: Mode;
     isValidPlace: (placeInfo: IPlace, shipId: number, grid: ICell[][]) => boolean;
+    markSurroundedCells: (begin: ICoord, end: ICoord, grid: ICell[][]) => void;
     utilityPlace: (place: IPlace, value: null | number, grid: ICell[][]) => void;
     initShips: () => IShip[];
     initBoard: () => ICell[][];

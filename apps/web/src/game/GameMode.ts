@@ -34,6 +34,40 @@ export class ClassicGameMode implements IGameMode {
      * @returns true - if all cells are free, false - otherwise
      */
     #isCellsEmpty(begin: ICoord, end: ICoord, shipId: number, grid: ICell[][]): boolean {
+        const fn = (cell: ICell) => {
+            if (cell.shipId && cell.shipId !== shipId) {
+                return false;
+            }
+            return true;
+        }
+
+        return this.#forEachInPerimeter(begin, end, grid, fn);
+    };
+
+    /**
+     * When ship is sunked - this method mark all cells on perimeter as hitted
+     * @param begin - ship's begin coord
+     * @param end - ship's end coord
+     * @param grid - game's grid
+     */
+    markSurroundedCells(begin: ICoord, end: ICoord, grid: ICell[][]): boolean {
+        const fn = (cell: ICell) => {
+            cell.isHit = true;
+            return true;
+        }
+
+        return this.#forEachInPerimeter(begin, end, grid, fn);
+    };
+
+    /**
+     * Utility method that helps to iterate each cell in ship's perimeter and apply a callback to it
+     * @param begin - ship's begin coord
+     * @param end - ship's end coord
+     * @param grid - game's grid
+     * @param fn - callback that will get the each cell
+     * @returns true - if iterate all cells, false - otherwise
+     */
+    #forEachInPerimeter(begin: ICoord, end: ICoord, grid: ICell[][], fn: (cell: ICell) => boolean) {
         const rowStart = Math.max(0, begin.y - 1);
         const rowEnd = Math.min(this.mode.SIZE - 1, end.y + 1);
         const colStart = Math.max(0, begin.x - 1);
@@ -41,13 +75,13 @@ export class ClassicGameMode implements IGameMode {
 
         for (let y = rowStart; y <= rowEnd; y++) {
             for (let x = colStart; x <= colEnd; x++) {
-                if (grid[y]![x]!.shipId && grid[y]![x]!.shipId !== shipId) {
+                if (!fn(grid[y]![x]!))
                     return false;
-                }
             }
         }
+
         return true;
-    };
+    }
 
     /**
      * Fill target cells with value
@@ -107,6 +141,7 @@ export class ClassicGameMode implements IGameMode {
         return (x >= 0 && x < this.mode.SIZE && y >= 0 && y < this.mode.SIZE);
     }
 
+    // НУЖНО где-то в enum сохранить все эти строковые значения в types, для единобразия!
     /**
      * Detect ship's hit, miss, sunk 
      * @param coord - coordinates of opponent's hit
@@ -130,6 +165,8 @@ export class ClassicGameMode implements IGameMode {
         hittedShip.hit();
         // Check if sunk
         if (hittedShip.isSunk()) {
+            // Mark surrounded cell
+
             gameboard.incrementSunk();
             if (gameboard.checkAllSunk())
                 return "Hit. Game over."

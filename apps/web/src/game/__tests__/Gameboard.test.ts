@@ -121,6 +121,25 @@ describe("Test Gameboard interface for classic mode", () => {
                 .toBe("Hit. Sunk.");
         });
 
+        it("should mark cell that surround sunked ship as hitted", () => {
+            board.placeShip({ x: 0, y: 4 }, 8, "horizontal");
+            expect(board.receiveAttack({ x: 0, y: 4 }))
+                .toBe("Hit");
+            expect(board.receiveAttack({ x: 1, y: 4 }))
+                .toBe("Hit");
+            expect(board.receiveAttack({ x: 2, y: 4 }))
+                .toBe("Hit. Sunk.");
+            const grid = board.getGrid();
+            const hittedCell: ICell = { isHit: true, shipId: null };
+            expect(grid[4]![3]).toEqual(hittedCell);
+            expect(grid[3]![0]).toEqual(hittedCell);
+            expect(grid[3]![1]).toEqual(hittedCell);
+            expect(grid[3]![2]).toEqual(hittedCell);
+            expect(grid[3]![3]).toEqual(hittedCell);
+            expect(grid[4]![4]).not.toEqual(hittedCell);
+            expect(grid[2]![3]).not.toEqual(hittedCell);
+        });
+
         it("should handle outer bounds coordinates", () => {
             expect(() => board.receiveAttack({ x: -2, y: 0 }))
                 .toThrow("Coordinates are not valid");

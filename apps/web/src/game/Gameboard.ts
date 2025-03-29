@@ -142,6 +142,14 @@ export class Gameboard implements IGameboard {
             throw new Error("Coordinates are not valid");
         if (this.checkAllSunk())
             return "Game is over. No further moves allowed."
-        return this.#gameMode.handleAttack(coord, this);
+        const result = this.#gameMode.handleAttack(coord, this);
+        if (result === "Hit. Game over." || result === "Hit. Sunk.") {
+            const shipId = this.#grid[coord.y]![coord.x]!.shipId;
+            if (!shipId) return result;
+            const shipInfo = this.#shipsPlacement.get(shipId.toString());
+            if (!shipInfo) return result;
+            this.#gameMode.markSurroundedCells(shipInfo.start, shipInfo.end, this.#grid);
+        }
+        return result;
     };
 }
