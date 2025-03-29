@@ -1,4 +1,4 @@
-import { IGameboard, ModeType } from "@/src/game/types";
+import { HitResults, IGameboard, ModeType } from "@/src/game/types";
 import { ReactElement, useCallback, useMemo, useState } from "react";
 import { createCells } from "./utility";
 import { BoardView } from "./BoardView";
@@ -13,7 +13,8 @@ export const Board = ({ gameboard }: IBroadProps) => {
     const { SIZE, GRID } = ModeType[gameboard.getMode()];
 
     const attackFn = useCallback((x: number, y: number) => {
-        gameboard.receiveAttack({ x, y });
+        if (gameboard.receiveAttack({ x, y }) === HitResults.GAMEOVER)
+            console.log("GAME OVER")
         setGrid(gameboard.getGrid().map(row => [...row]));
     }, [gameboard]);
 

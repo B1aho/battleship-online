@@ -35,13 +35,14 @@ export class ClassicGameMode implements IGameMode {
      */
     #isCellsEmpty(begin: ICoord, end: ICoord, shipId: number, grid: ICell[][]): boolean {
         const fn = (cell: ICell) => {
-            if (cell.shipId && cell.shipId !== shipId) {
+            if (cell.shipId !== null && cell.shipId !== shipId) {
                 return false;
             }
             return true;
         }
 
-        return this.#forEachInPerimeter(begin, end, grid, fn);
+        const result = this.#forEachInPerimeter(begin, end, grid, fn);
+        return result;
     };
 
     /**
@@ -158,7 +159,7 @@ export class ClassicGameMode implements IGameMode {
         if (cell.isHit) return HitResults.OLD_MOVE;
         cell.isHit = true;
         const shipId = cell.shipId;
-        if (!shipId) return HitResults.MISS;
+        if (shipId === null) return HitResults.MISS;
         const hittedShip = ships[shipId];
         if (!hittedShip)
             throw new Error("Ship is undefined");

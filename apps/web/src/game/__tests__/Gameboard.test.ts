@@ -1,5 +1,5 @@
 import { Gameboard } from "../Gameboard";
-import { IGameboard, ICell } from "../types";
+import { IGameboard, ICell, HitResults } from "../types";
 
 describe("Test Gameboard interface for classic mode", () => {
 
@@ -110,25 +110,25 @@ describe("Test Gameboard interface for classic mode", () => {
         it("should detect miss, hit, sunk", () => {
             board.placeShip({ x: 4, y: 6 }, 8, "horizontal");
             expect(board.receiveAttack({ x: 4, y: 6 }))
-                .toBe("Hit");
+                .toBe(HitResults.HIT);
             expect(board.receiveAttack({ x: 5, y: 6 }))
-                .toBe("Hit");
+                .toBe(HitResults.HIT);
             expect(board.receiveAttack({ x: 3, y: 8 }))
-                .toBe("Miss");
+                .toBe(HitResults.MISS);
             expect(board.receiveAttack({ x: 4, y: 6 }))
-                .toBe("Move has already been made");
+                .toBe(HitResults.OLD_MOVE);
             expect(board.receiveAttack({ x: 6, y: 6 }))
-                .toBe("Hit. Sunk.");
+                .toBe(HitResults.SUNK);
         });
 
         it("should mark cell that surround sunked ship as hitted", () => {
             board.placeShip({ x: 0, y: 4 }, 8, "horizontal");
             expect(board.receiveAttack({ x: 0, y: 4 }))
-                .toBe("Hit");
+                .toBe(HitResults.HIT);
             expect(board.receiveAttack({ x: 1, y: 4 }))
-                .toBe("Hit");
+                .toBe(HitResults.HIT);
             expect(board.receiveAttack({ x: 2, y: 4 }))
-                .toBe("Hit. Sunk.");
+                .toBe(HitResults.SUNK);
             const grid = board.getGrid();
             const hittedCell: ICell = { isHit: true, shipId: null };
             expect(grid[4]![3]).toEqual(hittedCell);
@@ -143,6 +143,18 @@ describe("Test Gameboard interface for classic mode", () => {
         it("should handle outer bounds coordinates", () => {
             expect(() => board.receiveAttack({ x: -2, y: 0 }))
                 .toThrow("Coordinates are not valid");
-        })
-    })
+        });
+    });
+
+    describe("Test random ship placement", () => {
+        let board: IGameboard;
+        beforeEach(() => {
+            board = new Gameboard("classic");
+        });
+
+        it("should place all avaliable ships", () => {
+            board.placeRandom();
+            expect(board.getPlacedShipsNum()).toBe(board.getShips().length);
+        });
+    });
 });

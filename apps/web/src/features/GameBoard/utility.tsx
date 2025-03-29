@@ -12,10 +12,10 @@ export function createCells(
             const { shipId, isHit } = grid[i]![j]!;
             let symbol = " ";
             switch (true) {
-                case (!!shipId && isHit):
+                case (shipId !== null && isHit):
                     symbol = "x";
                     break;
-                case (!!shipId):
+                case (shipId !== null):
                     symbol = "#";
                     break;
                 case (isHit):
@@ -27,10 +27,7 @@ export function createCells(
             cells.push(
                 <div key={`${i}-${j}`}
                     className="w-full cursor-pointer hover:bg-blue-300 transition-all ease-in-out text-center outline-1"
-                    onPointerUp={() => {
-                        console.log("hit")
-                        attackFn(j, i)
-                    }}>
+                    onPointerUp={() => attackFn(j, i)}>
                     {symbol}
                 </div>
             );

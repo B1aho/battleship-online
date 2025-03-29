@@ -8,7 +8,8 @@ import {
     IPlace,
     IShip,
     IGameMode,
-    HitResults
+    HitResults,
+    ModeType
 } from "./types";
 
 /**
@@ -73,6 +74,13 @@ export class Gameboard implements IGameboard {
     }
 
     /**
+     * @returns Number of placed ships
+     */
+    getPlacedShipsNum(): number {
+        return this.#shipsPlacement.size;
+    }
+
+    /**
     * Increments the count of sunk ships.
     */
     incrementSunk() {
@@ -128,6 +136,26 @@ export class Gameboard implements IGameboard {
     };
 
     /**
+     * This method place all avaliable ships in random order
+     * @returns 
+     */
+    placeRandom() {
+        let shipId = 0;
+
+        while (this.getPlacedShipsNum() < ModeType.classic.SIZE) {
+            let isPlaced = false
+            while (!isPlaced) {
+                const x = Math.floor(Math.random() * ModeType.classic.SIZE);
+                const y = Math.floor(Math.random() * ModeType.classic.SIZE);
+                const direction: Direction = Math.floor(Math.random() * 2) === 0 ? "horizontal" : "vertical";
+                isPlaced = this.placeShip({ x, y }, shipId, direction);
+            }
+            shipId++;
+        }
+        return true;
+    }
+
+    /**
     * Handles an attack on the game board at the specified coordinates.
     *
     * Validates the coordinates using the game mode strategy and then delegates the attack
@@ -146,7 +174,7 @@ export class Gameboard implements IGameboard {
         const result = this.#gameMode.handleAttack(coord, this);
         if (result === HitResults.GAMEOVER || result === HitResults.SUNK) {
             const shipId = this.#grid[coord.y]![coord.x]!.shipId;
-            if (!shipId) return result;
+            if (shipId === null) return result;
             const shipInfo = this.#shipsPlacement.get(shipId.toString());
             if (!shipInfo) return result;
             this.#gameMode.markSurroundedCells(shipInfo.start, shipInfo.end, this.#grid);

@@ -23,9 +23,11 @@ export type Direction = "horizontal" | "vertical";
 export interface IGameboard {
     getGrid: () => ICell[][];
     getShips: () => IShip[];
+    getPlacedShipsNum: () => number;
     getMode: () => GameMode;
     receiveAttack: (coord: ICoord) => string;
     placeShip: (coord: ICoord, shipId: number, direction: Direction) => boolean;
+    placeRandom: () => boolean;
     incrementSunk: () => void;
     checkAllSunk: () => boolean;
 }
