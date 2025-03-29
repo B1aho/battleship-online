@@ -25,10 +25,12 @@ export function createCells(
                     break;
             }
             cells.push(
-                <div key={`${i}-${j}`} className="w-full text-center outline-1" onClick={() => {
-                    console.log("hit")
-                    attackFn(j, i)
-                }}>
+                <div key={`${i}-${j}`}
+                    className="w-full cursor-pointer hover:bg-blue-300 transition-all ease-in-out text-center outline-1"
+                    onPointerUp={() => {
+                        console.log("hit")
+                        attackFn(j, i)
+                    }}>
                     {symbol}
                 </div>
             );
