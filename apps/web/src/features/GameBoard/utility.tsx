@@ -1,5 +1,5 @@
-import { ICell } from "@/src/game/types";
-import { ReactElement } from "react";
+import { ICell, IShip } from "@/src/game/types";
+import { JSX, ReactElement } from "react";
 
 export function createCells(
     grid: ICell[][],
@@ -34,4 +34,19 @@ export function createCells(
         }
     }
     return cells;
+}
+
+export function createShips(ships: IShip[]) {
+    const shipBlocks: JSX.Element[][] = [];
+    let i = ships.length - 1;
+    while (i >= 0) {
+        const ship = ships[i];
+        if (!ship) continue;
+        const blocks = Array.from({ length: ship.length() }, () => {
+            return <div className={"aspect-square w-2 " + (ship.isSunk() ? "bg-red-600" : "bg-neutral-500")}></div>
+        })
+        shipBlocks.push(blocks);
+        i--;
+    }
+    return shipBlocks;
 }
