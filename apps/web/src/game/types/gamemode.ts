@@ -32,3 +32,11 @@ export const ModeType: Record<GameMode, Mode> = {
         MAX_SHIP_KIND: 7,
     },
 }
+
+export enum HitResults {
+    HIT = "Hit",
+    GAMEOVER = "Hit. Game over.",
+    SUNK = "Hit. Sunk.",
+    MISS = "Miss",
+    OLD_MOVE = "Move has already been made"
+}

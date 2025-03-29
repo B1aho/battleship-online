@@ -7,7 +7,8 @@ import {
     ICoord,
     IPlace,
     IShip,
-    IGameMode
+    IGameMode,
+    HitResults
 } from "./types";
 
 /**
@@ -143,7 +144,7 @@ export class Gameboard implements IGameboard {
         if (this.checkAllSunk())
             return "Game is over. No further moves allowed."
         const result = this.#gameMode.handleAttack(coord, this);
-        if (result === "Hit. Game over." || result === "Hit. Sunk.") {
+        if (result === HitResults.GAMEOVER || result === HitResults.SUNK) {
             const shipId = this.#grid[coord.y]![coord.x]!.shipId;
             if (!shipId) return result;
             const shipInfo = this.#shipsPlacement.get(shipId.toString());

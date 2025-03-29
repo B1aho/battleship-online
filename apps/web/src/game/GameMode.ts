@@ -1,5 +1,5 @@
 import { Ship } from "./Ship";
-import { IGameMode, IPlace, ICell, ICoord, IGameboard, IShip, ModeType, Mode } from "./types";
+import { IGameMode, IPlace, ICell, ICoord, IGameboard, IShip, ModeType, Mode, HitResults } from "./types";
 
 /**
  * The ClassicGameMode class represent battleship mode with classic rules. It responsible for:
@@ -148,17 +148,17 @@ export class ClassicGameMode implements IGameMode {
      * @param gameboard - instance of Gameboard
      * @returns string that represent result of attack
      */
-    handleAttack(coord: ICoord, gameboard: IGameboard): string {
+    handleAttack(coord: ICoord, gameboard: IGameboard): HitResults {
         const { x, y } = coord;
         const grid = gameboard.getGrid();
         const ships = gameboard.getShips();
         const cell = grid[y]![x];
         if (!cell)
             throw new Error("Cell is undefined");;
-        if (cell.isHit) return "Move has already been made";
+        if (cell.isHit) return HitResults.OLD_MOVE;
         cell.isHit = true;
         const shipId = cell.shipId;
-        if (!shipId) return "Miss";
+        if (!shipId) return HitResults.MISS;
         const hittedShip = ships[shipId];
         if (!hittedShip)
             throw new Error("Ship is undefined");
@@ -169,9 +169,9 @@ export class ClassicGameMode implements IGameMode {
 
             gameboard.incrementSunk();
             if (gameboard.checkAllSunk())
-                return "Hit. Game over."
-            else return "Hit. Sunk.";
+                return HitResults.GAMEOVER;
+            else return HitResults.SUNK;
         }
-        return "Hit";
+        return HitResults.HIT;
     }
 }
