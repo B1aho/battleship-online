@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router';
 import './App.css'
-import { Home } from './pages/Home';
+import { Play } from './pages/Play';
 import { Layout } from './pages/Layout';
 import { AuthLayout } from './pages/AuthLayout';
 import { Login } from './features/Auth/Login';
@@ -10,10 +10,10 @@ function App() {
   return (
     <>
       <Routes>
-        <Route element={<Layout />}>
-          <Route index path="home" element={<Home />} />
-          <Route index path="room" element={<Home />} />
-          <Route path="about" element={<Home />} />
+        <Route path="/" element={<Layout />}>
+          <Route index path="play" element={<Play />} />
+          <Route index path="room" element={<Play />} />
+          <Route path="about" element={<Play />} />
           <Route element={<AuthLayout />}>
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />

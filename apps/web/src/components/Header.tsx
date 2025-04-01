@@ -4,22 +4,22 @@ import { NavLink } from "react-router";
 
 export const Header = () => {
     const { t } = useTranslation("nav");
-    const activeLink = "";
+    const links = [
+        {
+            to: "play",
+            content: t("play"),
+        },
+        {
+            to: "room",
+            content: t("create"),
+        }
+    ];
     return (
         <nav className="flex w-full">
             <Ship />
-            {/* Передаем в hover item локализованную спомощью t строку! Или делаем четыре кнопки на основе ховер
-            Вообще лучше назвать hoverButton, если кнопка */}
-            <NavLink
-                to="home"
-                className={({ isActive }) => (isActive ? activeLink : "")} >
-                {t("play")}
-            </NavLink>
-            <NavLink
-                to="room"
-                className={({ isActive }) => (isActive ? activeLink : "")} >
-                {t("create")}
-            </NavLink>
+            {links.map(link => {
+                return <NavLink to={link.to}>{link.content}</NavLink>;
+            })}
         </nav>
     );
 }
