@@ -32,6 +32,12 @@ importers:
       '@workspace/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      i18next:
+        specifier: ^24.2.3
+        version: 24.2.3(typescript@5.7.3)
+      i18next-browser-languagedetector:
+        specifier: ^8.0.4
+        version: 8.0.4
       lucide-react:
         specifier: ^0.475.0
         version: 0.475.0(react@19.0.0)
@@ -41,6 +47,9 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.0.0(react@19.0.0)
+      react-i18next:
+        specifier: ^15.4.1
+        version: 15.4.1(i18next@24.2.3(typescript@5.7.3))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react-router:
         specifier: ^7.4.1
         version: 7.4.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -384,6 +393,10 @@ packages:
 
   '@babel/runtime-corejs3@7.27.0':
     resolution: {integrity: sha512-UWjX6t+v+0ckwZ50Y5ShZLnlk95pP5MyW/pon9tiYzl3+18pkTHTFNTKr7rQbfRXPkowt2QAn30o1b6oswszew==, tarball: https://registry.npmjs.org/@babel/runtime-corejs3/-/runtime-corejs3-7.27.0.tgz}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/runtime@7.27.0':
+    resolution: {integrity: sha512-VtPOkrdPHZsKc/clNqyi9WUA8TINkZ4cGk63UUE3u4pmB2k+ZMQRDuIOagv8UVd6j7k0T3+RRIb7beKTebNbcw==, tarball: https://registry.npmjs.org/@babel/runtime/-/runtime-7.27.0.tgz}
     engines: {node: '>=6.9.0'}
 
   '@babel/template@7.27.0':
@@ -1997,6 +2010,9 @@ packages:
   html-escaper@2.0.2:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==, tarball: https://registry.npmjs.org/html-escaper/-/html-escaper-2.0.2.tgz}
 
+  html-parse-stringify@3.0.1:
+    resolution: {integrity: sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==, tarball: https://registry.npmjs.org/html-parse-stringify/-/html-parse-stringify-3.0.1.tgz}
+
   http-proxy-agent@5.0.0:
     resolution: {integrity: sha512-n2hY8YdoRE1i7r6M0w9DIw5GgZN0G25P8zLCRQ8rjXtTU3vsNFBI/vWK/UIeE6g5MUUz6avwAPXmL6Fy9D/90w==, tarball: https://registry.npmjs.org/http-proxy-agent/-/http-proxy-agent-5.0.0.tgz}
     engines: {node: '>= 6'}
@@ -2016,6 +2032,17 @@ packages:
   human-signals@2.1.0:
     resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==, tarball: https://registry.npmjs.org/human-signals/-/human-signals-2.1.0.tgz}
     engines: {node: '>=10.17.0'}
+
+  i18next-browser-languagedetector@8.0.4:
+    resolution: {integrity: sha512-f3frU3pIxD50/Tz20zx9TD9HobKYg47fmAETb117GKGPrhwcSSPJDoCposXlVycVebQ9GQohC3Efbpq7/nnJ5w==, tarball: https://registry.npmjs.org/i18next-browser-languagedetector/-/i18next-browser-languagedetector-8.0.4.tgz}
+
+  i18next@24.2.3:
+    resolution: {integrity: sha512-lfbf80OzkocvX7nmZtu7nSTNbrTYR52sLWxPtlXX1zAhVw8WEnFk4puUkCR4B1dNQwbSpEHHHemcZu//7EcB7A==, tarball: https://registry.npmjs.org/i18next/-/i18next-24.2.3.tgz}
+    peerDependencies:
+      typescript: ^5
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==, tarball: https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.24.tgz}
@@ -2876,6 +2903,19 @@ packages:
     peerDependencies:
       react: ^19.0.0
 
+  react-i18next@15.4.1:
+    resolution: {integrity: sha512-ahGab+IaSgZmNPYXdV1n+OYky95TGpFwnKRflX/16dY04DsYYKHtVLjeny7sBSCREEcoMbAgSkFiGLF5g5Oofw==, tarball: https://registry.npmjs.org/react-i18next/-/react-i18next-15.4.1.tgz}
+    peerDependencies:
+      i18next: '>= 23.2.3'
+      react: '>= 16.8.0'
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==, tarball: https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz}
 
@@ -3439,6 +3479,10 @@ packages:
       yaml:
         optional: true
 
+  void-elements@3.1.0:
+    resolution: {integrity: sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==, tarball: https://registry.npmjs.org/void-elements/-/void-elements-3.1.0.tgz}
+    engines: {node: '>=0.10.0'}
+
   w3c-xmlserializer@4.0.0:
     resolution: {integrity: sha512-d+BFHzbiCx6zGfz0HyQ6Rg69w9k19nviJspaj4yNscGjrHu94sVP+aRm75yEbCh+r2/yR+7q6hux9LVtbuTGBw==, tarball: https://registry.npmjs.org/w3c-xmlserializer/-/w3c-xmlserializer-4.0.0.tgz}
     engines: {node: '>=14'}
@@ -3737,6 +3781,10 @@ snapshots:
   '@babel/runtime-corejs3@7.27.0':
     dependencies:
       core-js-pure: 3.41.0
+      regenerator-runtime: 0.14.1
+
+  '@babel/runtime@7.27.0':
+    dependencies:
       regenerator-runtime: 0.14.1
 
   '@babel/template@7.27.0':
@@ -5573,6 +5621,10 @@ snapshots:
 
   html-escaper@2.0.2: {}
 
+  html-parse-stringify@3.0.1:
+    dependencies:
+      void-elements: 3.1.0
+
   http-proxy-agent@5.0.0:
     dependencies:
       '@tootallnate/once': 2.0.0
@@ -5603,6 +5655,16 @@ snapshots:
       - supports-color
 
   human-signals@2.1.0: {}
+
+  i18next-browser-languagedetector@8.0.4:
+    dependencies:
+      '@babel/runtime': 7.27.0
+
+  i18next@24.2.3(typescript@5.7.3):
+    dependencies:
+      '@babel/runtime': 7.27.0
+    optionalDependencies:
+      typescript: 5.7.3
 
   iconv-lite@0.4.24:
     dependencies:
@@ -6700,6 +6762,15 @@ snapshots:
       react: 19.0.0
       scheduler: 0.25.0
 
+  react-i18next@15.4.1(i18next@24.2.3(typescript@5.7.3))(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+    dependencies:
+      '@babel/runtime': 7.27.0
+      html-parse-stringify: 3.0.1
+      i18next: 24.2.3(typescript@5.7.3)
+      react: 19.0.0
+    optionalDependencies:
+      react-dom: 19.0.0(react@19.0.0)
+
   react-is@16.13.1: {}
 
   react-is@18.3.1: {}
@@ -7297,6 +7368,8 @@ snapshots:
       jiti: 2.4.2
       lightningcss: 1.29.2
       tsx: 4.19.3
+
+  void-elements@3.1.0: {}
 
   w3c-xmlserializer@4.0.0:
     dependencies:
