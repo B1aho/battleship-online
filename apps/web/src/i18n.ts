@@ -13,14 +13,14 @@ i18next
     .init({
         resources: {
             en: {
-                translation: commonEn,
+                common: commonEn,
                 nav: navEn,
             },
             ru: {
-                translation: commonRu,
+                common: commonRu,
                 nav: navRu,
             },
         },
-        ns: ["nav"],
+        ns: ["nav", "common"],
         fallbackLng: "en",
     })

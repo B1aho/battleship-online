@@ -7,4 +7,9 @@
     :root {
       --cell-size: 28px;
     }
-  }
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+}
