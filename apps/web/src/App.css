@@ -17,3 +17,4 @@
   grid-template-columns: var(--cell-size) 1fr;
   grid-template-rows: var(--cell-size) 1fr;
 }
+

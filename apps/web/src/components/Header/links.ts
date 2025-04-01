@@ -1,4 +1,4 @@
-import { LucideProps, Play } from "lucide-react";
+import { Cable, LucideProps, Play } from "lucide-react";
 import { ForwardRefExoticComponent } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -21,6 +21,7 @@ export const useLinks = (): ILink[] => {
         {
             key: "L-1",
             to: "room",
+            Icon: Cable,
             text: t("nav:create"),
         }
     ]);

@@ -14,9 +14,9 @@ export const NavTab = ({ text, isActive, setAnchor, Icon }: INavTab) => {
     }, [isActive, setAnchor]);
 
     return (
-        <span className="flex text-lg  h-full bg-blue-300">
-            {/*Icon && <Icon /> Если mobile то иконки*/}
-            <span>{text}</span>
-        </span>
+        <>
+            {Icon && <Icon size={30} className={"z-10 flex-1 w-full transition-all duration-300 hover:text-amber-300 hover:shadow-amber-300 " + (isActive ? "text-amber-300 shadow-amber-300 -translate-y-5" : "")} />}
+            <span className="absolute opacity-0 h-full w-full text-center">{text}</span>
+        </>
     );
 }
