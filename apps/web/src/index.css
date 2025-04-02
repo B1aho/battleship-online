@@ -16,9 +16,24 @@ html, body, #root {
   height: 100%;
 }
 
-.header-bg {
-  background: #ff4b1f;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #1fddff, #ff4b1f);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+.nav-container {
+  @apply flex items-center w-[80%] h-[60%] rounded-lg bg-gray-800 shadow-black shadow-[inset_0_1px_3px_rgba(0,0,0,0.1),inset_0_-1px_3px_rgba(0,0,0,0.1),inset_1px_0_3px_rgba(0,0,0,0.1),inset_-1px_0_3px_rgba(0,0,0,0.1)];
+}
 
+.nav-marker {
+  @apply absolute opacity-0 top-[20%] left-[50%] -translate-x-1/2 w-[3.6rem] h-[50px] border-t-(--light-yellow) border-t-2 border-l-(--light-yellow) border-l-2 rounded-[15px] bg-(--dark-yellow) shadow-[0_0_0_6px_rgb(17,24,39),0_2px_0_5px_var(--light-yellow)];
+}
+
+.nav-marker::before {
+  content: '';
+  @apply absolute top-[28%] -left-[32%] w-[10px] h-[10px] bg-transparent rounded-tr-lg shadow-[3px_-3px_0_2px_rgb(17,24,39)];
+}
+
+.nav-marker::after {
+  content: '';
+  @apply absolute top-[28%] -right-[29%] w-[10px] h-[10px] bg-transparent rounded-tl-lg shadow-[-3px_-3px_0px_1px_rgb(17,24,39)];
+}
+
+.nav-marker-label {
+  @apply absolute top-[74px] left-[50%] -translate-x-1/2 w-[7rem] h-[30px] bg-[var(--dark-yellow)] rounded-[20px] border-t-2 border-t-(--light-yellow) shadow-[0_0_0_5px_rgb(17,24,39),0_-2px_0_4px_var(--light-yellow)];
 }
