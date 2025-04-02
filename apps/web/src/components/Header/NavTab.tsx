@@ -15,7 +15,7 @@ export const NavTab = ({ text, isActive, setAnchor, Icon }: INavTab) => {
 
     const iconClass = "z-10 flex-1 w-full transition-all duration-400 group-hover:text-(--light-yellow) group-hover:drop-shadow-[0_0px_9px_rgb(252,211,77)] ";
     const activeIconClass = "text-(--light-yellow) drop-shadow-[0_0px_9px_rgb(252,211,77)] -translate-y-[30px]";
-    const linkTextClass = "absolute pointer-events-none uppercase text-(--light-yellow) opacity-0 h-full w-full transition-all duration-400 text-center font-medium text-[0.9rem] top-[4px] translate-y-[60px] ";
+    const linkTextClass = "absolute pointer-events-none uppercase text-(--light-yellow) opacity-0 h-full transition-all duration-400 text-center font-medium text-[0.9rem] top-[4px] translate-y-[60px] " + (text.length > 7 ? "w-[5rem] " : "w-full ");
     const activeLinkTextClass = "opacity-100 drop-shadow-[0_0px_9px_rgb(252,211,77)]";
     return (
         <>
