@@ -59,7 +59,7 @@ export const Header = () => {
     }, [anchor, disableTransition]);
 
     return (
-        <nav className="flex justify-center w-full h-[8rem] gap-2 relative items-center bg-gray-900 px-2 select-none text-white">
+        <nav className="header-container">
             {!isMobile &&
                 <span className="flex gap-1 text-2xl justify-center items-center mr-4 z-10">
                     <Ship size={40} />
@@ -81,7 +81,6 @@ export const Header = () => {
                                                 isActive={isActive}
                                                 setAnchor={() => {
                                                     setAnchor(linkRefs.current[idx]?.current);
-                                                    console.log(links[idx]?.text);
                                                     setAnchorText(links[idx]?.text ?? "");
                                                 }}
                                             />
