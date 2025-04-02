@@ -30,12 +30,12 @@ export const Header = () => {
                     ? "none"
                     : "left 300ms ease-in-out, width 300ms ease-in-out";
 
-                markerRef.current.style.left = `${anchor.offsetLeft}px`;
-                markerRef.current.style.width = `${anchor.offsetWidth}px`;
+                markerRef.current.style.left = `${anchor.getBoundingClientRect().left + (anchor.getBoundingClientRect().width / 2)}px`;
+                //markerRef.current.style.width = `${anchor.offsetWidth}px`;
 
                 // Центрируем по оси Y
                 markerRef.current.style.top = `${anchor.offsetTop + anchor.offsetHeight / 2}px`;
-                markerRef.current.style.transform = "translateY(-90%)"; // Центрируем
+                markerRef.current.style.transform = "translateY(-110%)"; // Центрируем
 
                 markerRef.current.style.opacity = "1";
                 // После первого вычисления позиций включаем transition
@@ -52,17 +52,17 @@ export const Header = () => {
     }, [anchor, disableTransition]);
 
     return (
-        <nav className="flex w-full h-[6rem] gap-2 relative items-center header-bg px-2 select-none">
-            <span className="flex text-2xl justify-center items-center mr-4 z-10">
-                <Ship width={55} />
-                <span>{t("logo")}</span>
+        <nav className="flex w-full h-[8rem] gap-2 relative items-center bg-gray-900 px-2 select-none text-white">
+            <span className="flex gap-1 text-2xl justify-center items-center mr-4 z-10">
+                <Ship size={40} />
+                <span className="font-bold">{t("logo")}</span>
             </span>
-            <ul className="flex items-center w-full h-full">
+            <ul className="flex items-center w-[80%] h-[60%] rounded-lg bg-gray-800">
                 {
                     links.map((link, idx) => {
                         return (
-                            <li className="list-none text-lg w-[20%] h-full bg-blue-300">
-                                <NavLink className="z-10 h-full relative" to={link.to} ref={linkRefs.current[idx]} key={link.key}>
+                            <li className="list-none text-lg w-[20%] h-full">
+                                <NavLink className="flex items-center text-gray-500 z-10 group h-full relative" to={link.to} ref={linkRefs.current[idx]} key={link.key}>
                                     {({ isActive }) => {
                                         return (
                                             <NavTab
@@ -79,7 +79,7 @@ export const Header = () => {
                     })
                 }
                 <div
-                    className="absolute opacity-0 top-[20%] z-[1] w-11 h-14 before:content-[''] before:absolute before:top-[20%] before:left-[50%] before:-translate-x-1/2 before:w-[40px] before:h-10 before:rounded-[8px] before:bg-white before:shadow-[0_0_0_10px_rgb(255,255,255),0_0_20px_rgb(255,255,255),0_0_40px_#fff,0_0_80px_#fff,0_0_160px_rgb(58,134,255)]"
+                    className="absolute top-[20%] left-[50%] -translate-x-1/2 w-[50px] h-[50px] border-t-(--light-yellow) border-t-2 border-l-(--light-yellow) border-l-2 rounded-[20px] bg-(--dark-yellow) shadow-[0_0_0_10px_rgb(17,24,39),0_2px_0_9px_var(--light-yellow)] before:absolute before:top-[30%] before:-left-[46%] before:w-[10px] before:h-[10px] before:bg-transparent before:rounded-tr-lg before:shadow-[3px_-2px_0_2px_rgb(17,24,39)] after:absolute after:top-[30%] after:-right-[41%] after:w-[10px] after:h-[10px] after:bg-transparent after:rounded-tl-lg after:shadow-[-3px_-3px_0px_1px_rgb(17,24,39)]"
                     ref={markerRef}
                     id="marker">
                 </div>

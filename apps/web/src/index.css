@@ -2,6 +2,8 @@
 
 :root {
     --cell-size: 40px;
+    --dark-yellow: #55650a;
+    --light-yellow: #c7f80d;
   } 
     @media (max-width: 480px) {
     :root {
@@ -15,6 +17,8 @@ html, body, #root {
 }
 
 .header-bg {
-  background-color: #8EC5FC;
-  background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+  background: #ff4b1f;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #1fddff, #ff4b1f);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #1fddff, #ff4b1f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }
