@@ -1,4 +1,7 @@
 {
     "play": "Play",
-    "create": "Create room"
+    "create": "Create",
+    "info": "About",
+    "login": "Log in",
+    "register": "Sign up"
 }

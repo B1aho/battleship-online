@@ -28,7 +28,7 @@ export const Header = () => {
                 // При первом монтировании отключаем анимацию
                 markerRef.current.style.transition = disableTransition
                     ? "none"
-                    : "left 300ms ease-in-out, width 300ms ease-in-out";
+                    : "left 400ms ease-in-out, width 400ms ease-in-out";
 
                 markerRef.current.style.left = `${anchor.getBoundingClientRect().left + (anchor.getBoundingClientRect().width / 2)}px`;
                 //markerRef.current.style.width = `${anchor.offsetWidth}px`;
@@ -57,7 +57,7 @@ export const Header = () => {
                 <Ship size={40} />
                 <span className="font-bold">{t("logo")}</span>
             </span>
-            <ul className="flex items-center w-[80%] h-[60%] rounded-lg bg-gray-800">
+            <ul className="flex items-center w-[80%] h-[60%] rounded-lg bg-gray-800 shadow-black shadow-[inset_0_1px_3px_rgba(0,0,0,0.1),inset_0_-1px_3px_rgba(0,0,0,0.1),inset_1px_0_3px_rgba(0,0,0,0.1),inset_-1px_0_3px_rgba(0,0,0,0.1)]">
                 {
                     links.map((link, idx) => {
                         return (
@@ -79,9 +79,11 @@ export const Header = () => {
                     })
                 }
                 <div
-                    className="absolute top-[20%] left-[50%] -translate-x-1/2 w-[50px] h-[50px] border-t-(--light-yellow) border-t-2 border-l-(--light-yellow) border-l-2 rounded-[20px] bg-(--dark-yellow) shadow-[0_0_0_10px_rgb(17,24,39),0_2px_0_9px_var(--light-yellow)] before:absolute before:top-[30%] before:-left-[46%] before:w-[10px] before:h-[10px] before:bg-transparent before:rounded-tr-lg before:shadow-[3px_-2px_0_2px_rgb(17,24,39)] after:absolute after:top-[30%] after:-right-[41%] after:w-[10px] after:h-[10px] after:bg-transparent after:rounded-tl-lg after:shadow-[-3px_-3px_0px_1px_rgb(17,24,39)]"
+                    className="absolute opacity-0 top-[20%] left-[50%] -translate-x-1/2 w-[3.6rem] h-[50px] border-t-(--light-yellow) border-t-2 border-l-(--light-yellow) border-l-2 rounded-[15px] bg-(--dark-yellow) shadow-[0_0_0_6px_rgb(17,24,39),0_2px_0_5px_var(--light-yellow)] before:absolute before:top-[28%] before:-left-[32%] before:w-[10px] before:h-[10px] before:bg-transparent before:rounded-tr-lg before:shadow-[3px_-3px_0_2px_rgb(17,24,39)] after:absolute after:top-[28%] after:-right-[29%] after:w-[10px] after:h-[10px] after:bg-transparent after:rounded-tl-lg after:shadow-[-3px_-3px_0px_1px_rgb(17,24,39)]"
                     ref={markerRef}
                     id="marker">
+                    <span className="absolute top-[74px] left-[50%] -translate-x-1/2 w-[7rem] h-[30px] bg-(--dark-yellow) rounded-[20px] border-t-(--light-yellow) border-t-2 shadow-[0_0_0_5px_rgb(17,24,39),0_-2px_0_4px_var(--light-yellow)]">
+                    </span>
                 </div>
             </ul>
         </nav>
