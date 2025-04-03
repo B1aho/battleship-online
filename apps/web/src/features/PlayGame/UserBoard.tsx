@@ -1,3 +1,9 @@
+import { Gameboard } from "@/src/game/Gameboard"
+import { Board } from "../GameBoard/Board";
+
 export const UserBoard = () => {
-    return <div></div>
+    const board = new Gameboard();
+    return <div>
+        <Board gameboard={board} />
+    </div>
 }

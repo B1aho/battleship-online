@@ -8,13 +8,17 @@ import { MoveInfo } from "../features/PlayGame/MoveInfo";
 import { OpponentBoard } from "../features/PlayGame/OpponentBoard";
 import { SelectMode } from "../features/PlayGame/SelectMode";
 import { UserBoard } from "../features/PlayGame/UserBoard";
+import { GameMode, IMove } from "../game/types";
+import { Chat } from "../features/PlayGame/Chat";
 
 export const Play = () => {
-    const [selectedMode, setSelectedMode] = useState(null);
+    const [selectedMode, setSelectedMode] = useState<"AI" | "ONLINE" | "ROOM" | null>(null);
+    const [selectedRules, setSelectedRules] = useState<GameMode>("classic");
+    const [currentAction, setCurrentAction] = useState<IMove | null>(null);
     return (
-        <div>
-            <MoveInfo />
-            <div>
+        <div className="p-2 flex flex-col">
+            <MoveInfo action={currentAction} />
+            <section aria-label="game-area">
                 <UserBoard />
                 <div>
                     {!selectedMode
@@ -22,7 +26,8 @@ export const Play = () => {
                         : <OpponentBoard mode={selectedMode} />
                     }
                 </div>
-            </div>
+            </section>
+            {selectedMode !== "AI" && <Chat />}
         </div>
     );
 }
