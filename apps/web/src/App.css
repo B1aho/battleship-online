@@ -18,3 +18,7 @@
   grid-template-rows: var(--cell-size) 1fr;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+}

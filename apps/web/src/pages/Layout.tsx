@@ -7,22 +7,29 @@ import { ArrowBigDownDash } from "lucide-react";
 export const Layout = () => {
     const [isHeaderHidden, setIsHeaderHidden] = useState(false);
     return (
-        <div className="w-full h-full fixed">
-            <section className={"flex flex-col items-center transition-transform duration-400 ease-in-out " + (isHeaderHidden ? "-translate-y-[calc(100%-40px)]" : "translate-y-0")}>
-                <Header />
+        <>
+            <div className="sticky top-0">
+                <section className={
+                    "overflow-hidden w-full transition-[max-height,opacity] duration-400 ease-in-out "
+                    + (isHeaderHidden ? "max-h-0 opacity-50" : "max-h-[400px] opacity-100")
+                }>
+                    <Header />
+                </section>
                 <div
                     aria-label="button"
-                    className="h-[40px] w-[40px] cursor-pointer"
+                    className="h-[40px] w-[40px] cursor-pointer bg-white"
                     onPointerUp={() => setIsHeaderHidden(!isHeaderHidden)}
                 >
                     <ArrowBigDownDash
                         size={40}
-                        className={"transition-transform duration-300 " + (isHeaderHidden ? "rotate-180" : "rotate-0")}
+                        className={"transition-transform duration-300 " + (isHeaderHidden ? "rotate-0" : "rotate-180")}
                     />
                 </div>
+            </div>
+            <section>
+                <Outlet />
             </section>
-            <Outlet />
             <Footer />
-        </div>
+        </>
     )
 };
