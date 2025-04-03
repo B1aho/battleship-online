@@ -3,7 +3,7 @@ import { JSX, ReactElement } from "react";
 
 export function createCells(
     grid: ICell[][],
-    attackFn: (x: number, y: number) => void,
+    attackFn?: (x: number, y: number) => void,
 ): ReactElement[] {
     const cells = [];
     const size = grid.length;
@@ -27,7 +27,11 @@ export function createCells(
             cells.push(
                 <div key={`${i}-${j}`}
                     className="w-full cursor-pointer hover:bg-blue-300 transition-all ease-in-out text-center outline-1"
-                    onPointerUp={() => attackFn(j, i)}>
+                    onPointerUp={() => {
+                        if (!attackFn)
+                            return [j, i];
+                        return attackFn(j, i)
+                    }}>{/* Добавить стили при условии если это opponent board*/}
                     {symbol}
                 </div>
             );

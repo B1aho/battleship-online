@@ -7,10 +7,6 @@ export interface ICoord {
     y: number;
 }
 
-export interface IMove extends ICoord {
-    payload: string;
-}
-
 export interface IPlace {
     start: ICoord;
     end: ICoord;
