@@ -11,6 +11,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Layout />}>
+          {/* Для play добавить динамический путь? Если онлайн - то хэш комнаты, иначе - ?=ai */}
           <Route index path="play" element={<Play />} />
           <Route index path="room" element={<Play />} />
           <Route path="about" element={<Play />} />
