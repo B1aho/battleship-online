@@ -21,6 +21,24 @@ import {
  * the core GameBoard logic.
  */
 export class Gameboard implements IGameboard {
+    // private mediator: BoardMediator | null = null;
+
+    // // Установить связь с медиатором
+    // setMediator(mediator: BoardMediator | null) {
+    //     this.mediator = mediator;
+    // }
+
+    // // При изменении доски уведомляем медиатор
+    // onUserAction(action: Action) {
+    //     const event = this.createEvent(action);
+    //     this.mediator?.notifyChange(this, event);
+    // }
+
+    // // Обработчик событий от других досок
+    // handleEvent(event: Event) {
+    //     // Применить изменения из event
+    //     console.log("Доска получила обновление:", event);
+    // }
     #grid: ICell[][] = [];
     /**
      * An array of ships available for placement, ordered from the largest to the smallest

@@ -5,7 +5,12 @@
 
 /**
  * Создавать на стрванице play экземпляр GameEventService (или если он синглтон не надо) и передавать его в дочерние
- * компоненты для регистрации подписки на событие удара 
+ * компоненты для регистрации подписки на событие удара
+ * 
+ * Далее каждый дочерний компонент (игрок и оппонент) могут своевременно эмиттить событие хода с нужной информацией, а
+ * Противоположный компонент реагировать на этот эмиттить
+ * 
+ * За предварительную реализацию хода: AiMove() или sendWsMove(), отвечает отдельная функциональность
  */
 
 import { useState } from "react";
@@ -13,7 +18,7 @@ import { MoveInfo } from "../features/PlayGame/MoveInfo";
 import { OpponentBoard } from "../features/PlayGame/OpponentBoard";
 import { SelectMode } from "../features/PlayGame/SelectMode";
 import { UserBoard } from "../features/PlayGame/UserBoard";
-import { GameMode, IMove } from "../game/types";
+import { GameMode } from "../game/types";
 import { Chat } from "../features/PlayGame/Chat";
 
 export const Play = () => {
